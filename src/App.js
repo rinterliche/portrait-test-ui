@@ -14,7 +14,7 @@ function App() {
   return (
     <AppContext.Provider value={{ appState, setAppState }}>
       <div className="h-full text-white">
-        <div className="m-20">
+        <div className="m-10 md:m-20">
           <AppHeader />
           <AppForm />
           <AppTable />
