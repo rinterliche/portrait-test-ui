@@ -15,18 +15,21 @@ function AppTable() {
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-20">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <th scope="col" colSpan="4" className="px-6 py-3">
+            Ticker: {searchTerm || "-"}
+          </th>
           <tr>
             <th scope="col" className="px-6 py-3">
-              {searchTerm || "-"}
+              Minimun price
             </th>
             <th scope="col" className="px-6 py-3">
-              maximum
+              Maximun price
             </th>
             <th scope="col" className="px-6 py-3">
-              minimum
+              Avarage price
             </th>
             <th scope="col" className="px-6 py-3">
-              Avarage
+              Volume
             </th>
           </tr>
         </thead>
@@ -34,20 +37,6 @@ function AppTable() {
         <tbody>
           {isLoadingTickers &&
             <>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-6 py-4">
-                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 animate-pulse"></div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-24 animate-pulse"></div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-24 animate-pulse"></div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-24 animate-pulse"></div>
-                </td>
-              </tr>
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td className="px-6 py-4">
                   <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 animate-pulse"></div>
@@ -96,23 +85,9 @@ function AppTable() {
                 <td className="px-6 py-4">
                   {ticker.averagePrice}
                 </td>
-              </tr>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  <span className="font-bold">Volume</span>
-                </th>
                 <td className="px-6 py-4">
-                  {ticker.minimumVolume}
+                  {ticker.volume}
                 </td>
-                <td className="px-6 py-4">
-                  {ticker.maximumVolume}
-                </td>
-                <td className="px-6 py-4">
-                  {ticker.averageVolume}
-                </td>
-              </tr>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td colSpan="4"></td>
               </tr>
             </>
           })}
