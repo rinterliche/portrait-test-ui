@@ -4,14 +4,22 @@ import { AppContext } from "../AppContext"
 
 function AppForm() {
   const { appState, setAppState } = useContext(AppContext)
-  const [ formSearchTerm, setFormSearchTerm ] = useState("")
+  const [ formParams, setFormParams ] = useState({
+    tickerName: "",
+    multiplier: 1,
+    timespan: "day",
+    from: "2023-01-01",
+    to: "2023-12-31"
+  })
 
   async function handleSubmit(event) {
     event.preventDefault()
 
     setAppState({ ...appState, isLoadingTickers: true })
 
-    await fetch(`http://localhost:3001/stock_tickers/search/${formSearchTerm.toUpperCase()}/1/day/2020-01-01/2023-12-31`, {
+    const url = `http://localhost:3001/stock_tickers/search/${formParams.tickerName.toUpperCase()}/${formParams.multiplier}/${formParams.timespan}/${formParams.from}/${formParams.to}`
+
+    await fetch(url, {
       method: "GET",
       headers: {
         "access-control-allow-origin": "*",
@@ -22,29 +30,31 @@ function AppForm() {
     .then(tickers => {
       const humanizedTickers = []
 
-      tickers.results.forEach(ticker => {
-        humanizedTickers.push({
-          minimumPrice: `$${ticker.l}`,
-          maximumPrice: `$${ticker.h}`,
-          averagePrice: `$${ticker.vw}`,
-          minimumVolume: `$${ticker.v}`,
-          maximumVolume: `$${ticker.v}`,
-          averageVolume: `$${ticker.v}`
+      if (tickers.results !== undefined) {
+        tickers.results.forEach(ticker => {
+          humanizedTickers.push({
+            minimumPrice: `$${ticker.l}`,
+            maximumPrice: `$${ticker.h}`,
+            averagePrice: `$${ticker.vw}`,
+            minimumVolume: `$${ticker.v}`,
+            maximumVolume: `$${ticker.v}`,
+            averageVolume: `$${ticker.v}`
+          })
         })
-      })
+      }
 
-      setAppState({ ...appState, tickers: humanizedTickers, isLoadingTickers: false, searchTerm: formSearchTerm })
+      setAppState({ ...appState, tickers: humanizedTickers, isLoadingTickers: false, searchTerm: formParams.tickerName })
     })
   }
 
   function handleChangeSearchTerm(event) {
-    setFormSearchTerm(event.target.value)
+    setFormParams({ ...formParams, tickerName: event.target.value })
   }
 
   return (
     <form className="max-w-md mx-auto flex gap-5 mb-10" onSubmit={handleSubmit}>
       <div className="relative z-0 w-full">
-        <input type="text" name="stockTickerName" value={formSearchTerm} onChange={handleChangeSearchTerm} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <input type="text" name="stockTickerName" value={formParams.tickerName} onChange={handleChangeSearchTerm} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label htmlFor="stockTickerName" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Ticker name</label>
       </div>
       <button type="submit" className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
