@@ -20,7 +20,20 @@ function AppForm() {
     })
     .then(results => results.json())
     .then(tickers => {
-      setAppState({ ...appState, tickers: tickers.results, isLoadingTickers: false, searchTerm: formSearchTerm })
+      const humanizedTickers = []
+
+      tickers.results.forEach(ticker => {
+        humanizedTickers.push({
+          minimumPrice: `$${ticker.l}`,
+          maximumPrice: `$${ticker.h}`,
+          averagePrice: `$${ticker.vw}`,
+          minimumVolume: `$${ticker.v}`,
+          maximumVolume: `$${ticker.v}`,
+          averageVolume: `$${ticker.v}`
+        })
+      })
+
+      setAppState({ ...appState, tickers: humanizedTickers, isLoadingTickers: false, searchTerm: formSearchTerm })
     })
   }
 

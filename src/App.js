@@ -13,10 +13,12 @@ function App() {
 
   return (
     <AppContext.Provider value={{ appState, setAppState }}>
-      <div className="h-full bg-cyan-950 text-white px-20">
-        <AppHeader />
-        <AppForm />
-        <AppTable />
+      <div className="h-full text-white">
+        <div className="m-20">
+          <AppHeader />
+          <AppForm />
+          <AppTable />
+        </div>
       </div>
     </AppContext.Provider>
   )

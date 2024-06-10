@@ -4,5 +4,6 @@
 
 body, html, #root {
   font-family: "Open Sans", sans-serif;
+  background-color: rgb(8 51 68);
   height: 100%;
 }

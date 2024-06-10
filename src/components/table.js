@@ -13,17 +13,17 @@ function AppTable() {
 
   return (
     <div className="relative overflow-x-auto">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-20">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
               {searchTerm || "-"}
             </th>
             <th scope="col" className="px-6 py-3">
-              Maximun
+              maximum
             </th>
             <th scope="col" className="px-6 py-3">
-              Minimun
+              minimum
             </th>
             <th scope="col" className="px-6 py-3">
               Avarage
@@ -88,13 +88,13 @@ function AppTable() {
                   <span className="font-bold">Price</span>
                 </th>
                 <td className="px-6 py-4">
-                  $1.500,00
+                  {ticker.minimumPrice}
                 </td>
                 <td className="px-6 py-4">
-                  $1.500,00
+                  {ticker.maximumPrice}
                 </td>
                 <td className="px-6 py-4">
-                  $1.500,00
+                  {ticker.averagePrice}
                 </td>
               </tr>
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -102,14 +102,17 @@ function AppTable() {
                   <span className="font-bold">Volume</span>
                 </th>
                 <td className="px-6 py-4">
-                  1000
+                  {ticker.minimumVolume}
                 </td>
                 <td className="px-6 py-4">
-                  1000
+                  {ticker.maximumVolume}
                 </td>
                 <td className="px-6 py-4">
-                  1000
+                  {ticker.averageVolume}
                 </td>
+              </tr>
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td colSpan="4"></td>
               </tr>
             </>
           })}
